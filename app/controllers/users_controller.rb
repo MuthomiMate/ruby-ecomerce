@@ -1,20 +1,11 @@
 class UsersController < ApplicationController
+	# before_action :is_user?
 	def index
-		@user = User.all
+
 	end
 
-	def new
-		
+	private def is_user?
+		redirect_to admin_index_path unless current_user.role == "user"
 	end
 
-	def create
-		# render plain: params[:register].inspect
-		@post = User.new(register_params)
-		@post.save
-		redirect_to @users
-	end
-
-	def register_params
-		params.require(:register).permit(:name, :email, :password)
-	end
 end
